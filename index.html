@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>BMI Calculator + Info</title>
+<style>
+  body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
+    color: white;
+    padding: 20px;
+    text-align: center;
+  }
+  h1 {
+    color: #00f7ff;
+    text-shadow: 0 0 10px #00f7ff;
+    margin-bottom: 10px;
+  }
+  .nav-buttons {
+    margin-bottom: 20px;
+  }
+  .nav-buttons button {
+    background: #0072ff;
+    border: none;
+    color: white;
+    padding: 10px 15px;
+    margin: 0 5px;
+    border-radius: 20px;
+    cursor: pointer;
+    font-weight: bold;
+    transition: background 0.3s;
+  }
+  .nav-buttons button:hover, .nav-buttons button.active {
+    background: #00f7ff;
+    color: black;
+  }
+  .section {
+    display: none;
+    max-width: 600px;
+    margin: auto;
+    background: rgba(255,255,255,0.1);
+    padding: 20px;
+    border-radius: 15px;
+    box-shadow: 0 0 20px rgba(0, 247, 255, 0.5);
+    text-align: left;
+    color: #f0f0f0;
+  }
+  .section.active {
+    display: block;
+  }
+  label {
+    display: block;
+    margin-top: 15px;
+    font-weight: bold;
+  }
+  input {
+    width: 100%;
+    padding: 10px;
+    margin-top: 5px;
+    border: none;
+    border-radius: 10px;
+    font-size: 1rem;
+    outline: none;
+  }
+  button.calc-btn {
+    width: 100%;
+    padding: 12px;
+    margin-top: 20px;
+    border: none;
+    border-radius: 25px;
+    background: linear-gradient(90deg, #00f7ff, #0072ff);
+    color: black;
+    font-weight: bold;
+    font-size: 1.1rem;
+    cursor: pointer;
+    transition: transform 0.2s ease-in-out;
+  }
+  button.calc-btn:hover {
+    transform: scale(1.05);
+    background: linear-gradient(90deg, #00ffcc, #0072ff);
+  }
+  .result {
+    margin-top: 20px;
+    font-size: 1.3rem;
+    font-weight: bold;
+  }
+  .advice {
+    margin-top: 10px;
+    font-size: 1rem;
+  }
+  a {
+    color: #00f7ff;
+  }
+  ul.tips-list {
+    list-style-type: disc;
+    padding-left: 20px;
+    color: #cceeff;
+    font-size: 1rem;
+  }
+</style>
+
+</head>
+<body>
+
+<h1> Futuristic BMI Calculator + Info</h1>
+
+<div class="nav-buttons">
+  <button class="active" onclick="showSection('calculator', event)">Calculator</button>
+  <button onclick="showSection('privacy', event)">Privacy Policy</button>
+  <button onclick="showSection('about', event)">About</button>
+  <button onclick="showSection('contact', event)">Contact</button>
+  <button onclick="showSection('tips', event)">Useful Tips</button>
+</div>
+
+<div id="calculator" class="section active">
+
+  <label for="weight">Weight (kg):</label>
+  <input type="number" id="weight" placeholder="Enter weight in kg" />
+
+  <label for="height">Height (cm):</label>
+  <input type="number" id="height" placeholder="Enter height in cm" />
+
+  <button class="calc-btn" onclick="calculateBMI()">Calculate BMI</button>
+
+  <div class="result" id="result"></div>
+  <div class="advice" id="advice"></div>
+
+</div>
+
+<div id="privacy" class="section">
+  <h2>Privacy Policy</h2>
+  <p>Your privacy is important to us. This calculator does not collect personal data. Inputs stay on your device only.</p>
+  <p>We do not use any third-party ads or trackers.</p>
+  <p>If you have questions, contact us at <a href="mailto:wisdommanyamba@gmail.com">wisdommanyamba@gmail.com</a>.</p>
+</div>
+
+<div id="about" class="section">
+  <h2>About Me</h2>
+  <p>I am Wisdom Manyamba from Lilongwe, Malawi. I am a nurse by profession.</p>
+  <p>This site offers a simple BMI calculator to help people check their health easily.</p>
+</div>
+
+<div id="contact" class="section">
+  <h2>Contact Us</h2>
+  <p>If you have questions or feedback, send me an email:</p>
+  <p><a href="mailto:wisdommanyamba@gmail.com">wisdommanyamba@gmail.com</a></p>
+</div>
+
+<div id="tips" class="section">
+  <h2>Useful BMI Tips</h2>
+  <ul class="tips-list">
+    <li>Drink plenty of water daily.</li>
+    <li>Eat balanced meals with fruits and vegetables.</li>
+    <li>Exercise regularly, at least 30 minutes a day.</li>
+    <li>Limit sugary drinks and junk food.</li>
+    <li>Get enough sleep every night.</li>
+    <li>Manage stress through relaxation techniques.</li>
+  </ul>
+</div>
+
+<script>
+function showSection(id, event) {
+  const sections = document.querySelectorAll('.section');
+  const buttons = document.querySelectorAll('.nav-buttons button');
+
+  sections.forEach(section => section.classList.remove('active'));
+  buttons.forEach(btn => btn.classList.remove('active'));
+
+  document.getElementById(id).classList.add('active');
+  event.currentTarget.classList.add('active');
+}
+
+function calculateBMI() {
+  let weight = document.getElementById('weight').value;
+  let height = document.getElementById('height').value / 100;
+
+  if (weight && height) {
+    let bmi = (weight / (height * height)).toFixed(2);
+    let status = "";
+    let medicalAdvice = "";
+
+    if (bmi < 18.5) {
+      status = "Underweight";
+      medicalAdvice = "Consider increasing calorie intake with healthy foods. Include proteins, whole grains, and healthy fats.";
+    } else if (bmi < 24.9) {
+      status = "Normal weight";
+      medicalAdvice = "Maintain your current lifestyle with balanced diet and regular exercise.";
+    } else if (bmi < 29.9) {
+      status = "Overweight";
+      medicalAdvice = "Incorporate more physical activity, reduce sugary drinks, and eat more vegetables.";
+    } else {
+      status = "Obese";
+      medicalAdvice = "Seek medical advice for a safe weight loss plan. Focus on nutrient-rich foods and regular exercise.";
+    }
+
+    document.getElementById('result').innerHTML = `Your BMI is ${bmi} (${status})`;
+    document.getElementById('advice').innerHTML = ` Medical Advice: ${medicalAdvice}`;
+  } else {
+    document.getElementById('result').innerHTML = "Please enter both weight and height.";
+    document.getElementById('advice').innerHTML = "";
+  }
+}
+</script>
+
+</body>
+</html>
